@@ -9,6 +9,10 @@ services:
       - spring-codetest
     environment:
       TSUGI_DOMAIN: ${TSUGI_DOMAIN}
+      TSUGI_GOOGLE_CLIENT_SECRET: ${TSUGI_GOOGLE_CLIENT_SECRET}
+      TSUGI_GOOGLE_CLIENT_ID: ${TSUGI_GOOGLE_CLIENT_ID}
+      TSUGI_OWNER_NAME: ${TSUGI_OWNER_NAME}
+      TSUGI_OWNER_EMAIL: ${TSUGI_OWNER_EMAIL}
     build:
       context: ./
       dockerfile: Dockerfile_tsugi-ct
@@ -48,10 +52,10 @@ services:
     restart: unless-stopped
     build:
       context: ./
-      dockerfile: Dockerfile_validator
+      dockerfile: Dockerfile_xml_validator
       args:
         GITHUB_TOKEN: ${GITHUB_TOKEN}
-        VALIDATOR_BRANCH: ${VALIDATOR_BRANCH}
+        VALIDATOR_BRANCH: ${XML_VALIDATOR_BRANCH}
     environment:
       FEEDBACK_MANAGER_URL: ${FEEDBACK_MANAGER_URL}
       BASE_URL: ${XML_EVALUATOR_REQUESTS_BASE_URL}
@@ -59,7 +63,25 @@ services:
       EMAIL: ${XML_EVALUATOR_REQUESTS_EMAIL}
       PASSWORD: ${XML_EVALUATOR_REQUESTS_PASSWORD}
     ports:
-      - 3001:3000
+      - 3001:${XML_EVALUATOR_PORT}
+  java-validator:
+    container_name: java-validator_container
+    image: java-validator_img
+    restart: unless-stopped
+    build:
+      context: ./
+      dockerfile: Dockerfile_java_validator
+      args:
+        GITHUB_TOKEN: ${GITHUB_TOKEN}
+        VALIDATOR_BRANCH: ${JAVA_VALIDATOR_BRANCH}
+    environment:
+      FEEDBACK_MANAGER_URL: ${FEEDBACK_MANAGER_URL}
+      BASE_URL: ${JAVA_EVALUATOR_REQUESTS_BASE_URL}
+      PORT: ${JAVA_EVALUATOR_PORT}
+      EMAIL: ${JAVA_EVALUATOR_REQUESTS_EMAIL}
+      PASSWORD: ${JAVA_EVALUATOR_REQUESTS_PASSWORD}
+    ports:
+      - 3002:${JAVA_EVALUATOR_PORT}
   feedback-manager:
     container_name: feedback-manager_container
     image: feedback-manager_img
