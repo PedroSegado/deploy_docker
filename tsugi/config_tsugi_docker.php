@@ -76,10 +76,10 @@ $CFG->extra_css = "/tsugi/views/estilo.css";
 // You need to point this at a database with am account and password
 // that can create tables.   To make the initial tables go into Admin
 // to run the upgrade.php script which auto-creates the tables.
-$CFG->pdo       = 'mysql:host=tsugi-mysql-db;port=3306;dbname=tsugi';
+$CFG->pdo       = 'mysql:host='.getenv('MYSQL_HOST').';port='.getenv('MYSQL_PORT').';dbname='.getenv('MYSQL_DB');
 // $CFG->pdo       = 'mysql:host=127.0.0.1;port=8889;dbname=tsugi'; // MAMP
-$CFG->dbuser    = 'tsugi_root';
-$CFG->dbpass    = 'tpass';
+$CFG->dbuser    = getenv('MYSQL_USER');
+$CFG->dbpass    = getenv('MYSQL_PASS');
 
 // Sometimes the PDO constructor call needs additional parameters
 // $CFG->pdo_options = array(\PDO::MYSQL_ATTR_SSL_CA => './BaltimoreCyberTrustRoot.crt.pem'))
@@ -125,7 +125,7 @@ $CFG->dbprefix  = '';
 // features of this application. It can be the plaintext password
 // or a sha256 hash of the admin password.  Please don't use either
 // the 'tsugi' or the sha256 of 'tsugi' example values below.
-$CFG->adminpw = 'tsugi';
+$CFG->adminpw = getenv('TSUGI_ADMIN_PASSWORD');
 // $CFG->adminpw = 'tsugi';
 // $CFG->adminpw = 'sha256:9c0ccb0d53dd71b896cde69c78cf977acbcb36546c96bedec1619406145b5e9e';
 
@@ -190,20 +190,20 @@ $CFG->servicedesc = false;
 // $CFG->launcherror = $CFG->apphome . "/launcherror";
 
 // Define the default language for the site
-$CFG->lang='en';
+$CFG->lang=(getenv('TSUGI_LANG') ?: 'en');
 
 // Information on the owner of this system and whether we
 // allow folks to request keys for the service
-$CFG->ownername = false;  // 'Charles Severance'
-$CFG->owneremail = false; // 'csev@example.com'
-$CFG->providekeys = false;  // true
-$CFG->autoapprovekeys = false; // A regex like - '/.+@gmail\\.com/'
+$CFG->ownername = getenv('TSUGI_OWNER_NAME');  // 'Charles Severance'
+$CFG->owneremail = getenv('TSUGI_OWNER_EMAIL'); // 'csev@example.com'
+$CFG->providekeys = true;  // true
+//$CFG->autoapprovekeys = false; // A regex like - '/.+@gmail\\.com/'
 
 // Go to https://console.developers.google.com/apis/credentials
 // create a new OAuth 2.0 credential for a web application,
 // get the key and secret, and put them here:
-$CFG->google_client_id = false; // '96041-nljpjj8jlv4.apps.googleusercontent.com';
-$CFG->google_client_secret = false; // '6Q7w_x4ESrl29a';
+$CFG->google_client_id = getenv('TSUGI_GOOGLE_CLIENT_ID'); // false; // '96041-nljpjj8jlv4.apps.googleusercontent.com';
+$CFG->google_client_secret = getenv('TSUGI_GOOGLE_CLIENT_SECRET'); // false; // '6Q7w_x4ESrl29a';
 
 // This is a legacy backwards compatibility.   In the round-trip to Google it used to
 // come back login.php after login was successful - If this is true, we come back
@@ -287,7 +287,7 @@ $CFG->badge_assert_salt = false; // "mediumlengthhexstring";
 // menus will feature prominently in the UI.  In production, this should be
 // set to false so these non-end-user features are less prominent in the
 // navigation.
-$CFG->DEVELOPER = true;
+$CFG->DEVELOPER = false;
 
 // Is this is true, Tsugi will do a translation log into the table
 // tsugi_string while the application is being executed.  This allows

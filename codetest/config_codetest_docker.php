@@ -22,7 +22,7 @@ $CFG->CT_log = array(
     'filePath' => __DIR__ . "/tmp/ctLog.log",
 );
 
-$CFG->repositoryUrl = "spring-codetest:8080";
+$CFG->repositoryUrl = getenv('SPRING_CODETEST_URL').":".getenv('SPRING_CODETEST_PORT');
 
 $CFG->type = [
     "PHP" => "PHP",
@@ -46,7 +46,7 @@ $CFG->apiConfigs = [
     ],
     "xml-validator" => [
         // MUST HAVE A TRAILING SLASH
-        "baseUrl" => 'http://xml-validator:3000/',
+        "baseUrl" => "http://".getenv('XML_EVALUATOR_URL').":".getenv('XML_EVALUATOR_PORT')."/",
     ],
 ];
 
