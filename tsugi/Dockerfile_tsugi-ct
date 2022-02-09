@@ -44,6 +44,7 @@ RUN npm run build
 
 RUN mkdir tmp && chmod 777 tmp
 
+RUN cd /tmp && mkdir codetest && chmod 777 codetest
 
 WORKDIR /var/www/html/tsugi/mod
 RUN chmod 777 codetest
