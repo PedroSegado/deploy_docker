@@ -62,6 +62,7 @@ services:
       - 8079:8080
     volumes:
       - './central-repostitory/application.properties:/app/questions-storage/src/main/resources/application.properties:rw'
+      - 'spring-files:/codetest'
   xml-validator:
     container_name: xml-validator_container
     image: xml-validator_img
@@ -124,3 +125,4 @@ services:
 volumes:
   mongodb_data_container:
   mysql_data_container:
+  spring-files:
