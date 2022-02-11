@@ -66,7 +66,7 @@ services:
     depends_on:
       - spring-mongo-db
     ports:
-      - 8079:8080
+      - 8080:8080
     volumes:
       - './central-repository/application.properties:/app/questions-storage/src/main/resources/application.properties:rw'
       - 'spring-files:/codetest'
@@ -86,8 +86,6 @@ services:
       PORT: ${XML_EVALUATOR_PORT}
       EMAIL: ${XML_EVALUATOR_REQUESTS_EMAIL}
       PASSWORD: ${XML_EVALUATOR_REQUESTS_PASSWORD}
-    ports:
-      - 3001:3000
   feedback-manager:
     container_name: feedback-manager_container
     image: feedback-manager_img
@@ -101,8 +99,6 @@ services:
         GITHUB_TOKEN: ${GITHUB_TOKEN}
         PORT: ${FEEDBACK_MANAGER_PORT}
         FEEDBACK_MANAGER_BRANCH: ${FEEDBACK_MANAGER_BRANCH}
-    ports:
-      - 3004:3003
   tsugi-mysql-db:
     container_name: tsugi_mysql_db_container
     image: 'mysql:5.7'
@@ -112,8 +108,6 @@ services:
       MYSQL_DATABASE: ${MYSQL_DATABASE}
       MYSQL_USER: ${MYSQL_USER}
       MYSQL_PASSWORD: ${MYSQL_PASSWORD}
-    ports:
-      - 3307:3306
     volumes:
       - 'mysql_data_container:/var/lib/mysql:delegated'
   spring-mongo-db:
@@ -124,8 +118,6 @@ services:
       MONGO_INITDB_ROOT_USERNAME: ${MONGODB_USERNAME}
       MONGO_INITDB_ROOT_PASSWORD: ${MONGODB_PASSWORD}
       MONGO_INITDB_DATABASE: ${MONGODB_DATABASE}
-    ports:
-      - 27018:27017
     volumes:
       - 'mongodb_data_container:/data/db'
       - ./mongodb/mongo-init.js:/docker-entrypoint-initdb.d/mongo-init.js:ro
