@@ -81,6 +81,8 @@ services:
       PASSWORD: ${XML_EVALUATOR_REQUESTS_PASSWORD}
     ports:
       - 3001:3000
+    volumes:
+      - './volumes/xml-evaluator:/app:rw'
   feedback-manager:
     container_name: feedback-manager_container
     image: feedback-manager_img

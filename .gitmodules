@@ -1,0 +1,4 @@
+[submodule "volumes/xml-evaluator"]
+	path = volumes/xml-evaluator
+	url = git@github.com:KA226-COVID/xml-evaluator.git
+	branch = deployment
