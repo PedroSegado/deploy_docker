@@ -1,6 +1,6 @@
 FROM node:16.13.2
 
-WORKDIR /app/feedback-manager/minimal feedback
+WORKDIR /app/server
 
 RUN npm i
 

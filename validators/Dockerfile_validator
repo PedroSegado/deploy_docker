@@ -2,6 +2,8 @@ FROM node:16.13.2
 
 WORKDIR /app/server
 
+RUN npm i
+
 EXPOSE 3000
 
 ENTRYPOINT [ "npm", "run", "prod" ]
