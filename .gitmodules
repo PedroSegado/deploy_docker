@@ -1,4 +1,24 @@
+[submodule "volumes/tsugi"]
+	path = volumes/tsugi
+	url = git@github.com:KA226-COVID/tsugi.git
+	branch = codetest-customizations
+[submodule "volumes/codetest"]
+	path = volumes/codetest
+	url = git@github.com:KA226-COVID/codetest.git
+	branch = feat/external-validators
+[submodule "volumes/central-repository"]
+	path = volumes/central-repository
+	url = git@github.com:KA226-COVID/questions-storage.git
+	branch = feat/files-mgmt
 [submodule "volumes/xml-evaluator"]
 	path = volumes/xml-evaluator
+	url = git@github.com:KA226-COVID/xml-evaluator.git
+	branch = deployment
+[submodule "volumes/java-evaluator"]
+	path = volumes/java-evaluator
+	url = git@github.com:KA226-COVID/java-evaluator.git
+	branch = master
+[submodule "volumes/feedback-manager"]
+	path = volumes/feedback-manager
 	url = git@github.com:KA226-COVID/xml-evaluator.git
 	branch = deployment
