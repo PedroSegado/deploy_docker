@@ -35,14 +35,14 @@ $CFG->apiConfigs = [
     "spring-repo" => [
         // MUST HAVE A TRAILING SLASH
         "baseUrl" => "http://{$CFG->repositoryUrl}/",
-        "user" => "codetest",
-        "pass" => "c0d3te5t",
+        "user" => getenv('CENTRAL_REPOSITORY_USER'),
+        "pass" => getenv('CENTRAL_REPOSITORY_PASS'),
     ],
     "authorkit" => [
         // MUST HAVE A TRAILING SLASH
-        "baseUrl" => 'https://python.usz.edu.pl/authorkit/api/',
-        "user" => "info@juezlti.eu",
-        "pass" => "Ju3zLT1.",
+        "baseUrl" => getenv('AK_BASE_URL'),
+        "user" => getenv('AK_USER'),
+        "pass" => getenv('AK_PASS'),
     ],
     "xml-validator" => [
         // MUST HAVE A TRAILING SLASH
@@ -127,129 +127,3 @@ $CFG->difficulty = array(
     "medium" => "Medium",
     "Hard" => "Hard"
 );
-
-
-/**********************************************************
- ******************* ORACLE *******************************
- **********************************************************
--- ******* Routines to execute on Oracle System as 'dbUser'
---  Create onFly user
-CREATE OR REPLACE NONEDITIONABLE PROCEDURE CREATEISOLATEUSER
-(
-  V_USERNAME IN VARCHAR2,
-  V_PASSWORD IN VARCHAR2
-)
-AUTHID DEFINER
-AS
-    V_TABLESPACE VARCHAR2(100) DEFAULT 'USERS';
-    V_QUOTA VARCHAR2(10) DEFAULT '2M';
-    stmtCreateUser VARCHAR2(2000);
-    stmtGrantRole VARCHAR2(2000);
-BEGIN
-  EXECUTE IMMEDIATE 'ALTER SESSION SET "_ORACLE_SCRIPT"=TRUE';
-  stmtCreateUser := 'CREATE USER ' || V_USERNAME || ' IDENTIFIED BY ' || V_PASSWORD
-    || ' DEFAULT TABLESPACE ' || V_TABLESPACE
-    || ' QUOTA ' || V_QUOTA || ' ON ' || V_TABLESPACE
-    || ' ACCOUNT UNLOCK'
-    ;
-  EXECUTE IMMEDIATE stmtCreateUser;
-  stmtGrantRole := 'GRANT users_juezlti TO ' || V_USERNAME;
-  EXECUTE IMMEDIATE stmtGrantRole;
-END CREATEISOLATEUSER;
-/
--- Drop onFly user
-CREATE OR REPLACE NONEDITIONABLE PROCEDURE DROPISOLATEUSER
-(
-  V_USERNAME IN VARCHAR2
-) AS
-    stmtDropUser VARCHAR2(2000);
-BEGIN
-  EXECUTE IMMEDIATE 'ALTER SESSION SET "_ORACLE_SCRIPT"=TRUE';
-  stmtDropUser := 'DROP USER ' || V_USERNAME || ' CASCADE'
-    ;
-  EXECUTE IMMEDIATE stmtDropUser;
-END DROPISOLATEUSER;
-/
--- ****** Routines to execute on Oracle System as DBA ******
-CREATE ROLE users_juezlti;
-GRANT CONNECT TO users_juezlti;
-GRANT CREATE PROCEDURE, CREATE SEQUENCE, CREATE TABLE,
-CREATE TRIGGER, CREATE TYPE, CREATE VIEW TO users_juezlti;
-GRANT users_juezlti TO ***dbUser*** WITH ADMIN OPTION;
-GRANT CREATE USER, DROP USER TO ***dbUser*** CONTAINER=ALL;
--- Restricting CREATE and DROP USER to 'dbUser'
-create or replace NONEDITIONABLE TRIGGER USERRESTRICT
-BEFORE CREATE OR DROP ON DATABASE
-BEGIN
-    IF (
-        ora_login_user = '***dbUser***'
-        AND
-        ora_dict_obj_type = 'USER'
-        AND
-        INSTR(ora_dict_obj_name, '***userPrefix***') != 1
-        ) THEN
-            RAISE_APPLICATION_ERROR(-20001, 'Cannot CREATE/DROP USER');
-    END IF;
-END;
-/
-*/
-
-/**********************************************************
- ******************* MySQL ********************************
- **********************************************************
--- ******* Routines to execute on MySQL System as DBA
-USE **appDBName**;
-DROP PROCEDURE IF EXISTS CREATEISOLATEUSER;
---  Create onFly user
-DELIMITER $$
-CREATE PROCEDURE CREATEISOLATEUSER
-(
-  IN V_USERNAME VARCHAR(100),
-  IN V_PASSWORD VARCHAR(100)
-)
-SQL SECURITY DEFINER
-BEGIN
-  DECLARE dbUserPrefix VARCHAR(20) DEFAULT '**dbPrefix**';
-  DECLARE stmtCreateUser VARCHAR(2000);
-  DECLARE stmtCreateDatabase VARCHAR(2000);
-  DECLARE stmtGrant VARCHAR(2000);
-  IF LEFT(V_USERNAME, LENGTH(dbUserPrefix)) = dbUserPrefix THEN
-	SET @stmtCreateUserConcat = CONCAT('CREATE USER ''', V_USERNAME, '''@''**webServer | localhost**'' IDENTIFIED BY ''', V_PASSWORD, '''');
-	PREPARE stmtCreateUser FROM @stmtCreateUserConcat;
-	EXECUTE stmtCreateUser;
-	SET @stmtCreateDatabaseConcat = CONCAT('CREATE DATABASE IF NOT EXISTS ', V_USERNAME);
-    PREPARE stmtCreateDatabase FROM @stmtCreateDatabaseConcat;
-	EXECUTE stmtCreateDatabase;
-	SET @stmtGrantConcat = CONCAT('GRANT ALL PRIVILEGES ON ', V_USERNAME, '.* TO ''', V_USERNAME, '''@''**webServer | localhost**''');
-    PREPARE stmtGrant FROM @stmtGrantConcat;
-	EXECUTE stmtGrant;
-  END IF;
-END
-$$
-DELIMITER ;
--- Drop onFly user
-DROP PROCEDURE IF EXISTS DROPISOLATEUSER;
-DELIMITER $$
-CREATE  PROCEDURE DROPISOLATEUSER
-(
-  IN V_USERNAME VARCHAR(100)
-)
-SQL SECURITY DEFINER
-BEGIN
-  DECLARE dbUserPrefix VARCHAR(20) DEFAULT '**dbPrefix**';
-  DECLARE stmtDropUser VARCHAR(2000);
-  DECLARE stmtDropDatabase VARCHAR(2000);
-  IF LEFT(V_USERNAME, LENGTH(dbUserPrefix)) = dbUserPrefix THEN
-    SET @stmtDropUserConcat = CONCAT('DROP USER ''', V_USERNAME, '''@''**webServer | localhost**''');
-	PREPARE stmtDropUser FROM @stmtDropUserConcat;
-	EXECUTE stmtDropUser;
-	SET @stmtDropDatabaseConcat = CONCAT('DROP DATABASE ', V_USERNAME);
-    PREPARE stmtDropDatabase FROM @stmtDropDatabaseConcat;
-	EXECUTE stmtDropDatabase;
-  END IF;
-END
-$$
-DELIMITER ;
-GRANT EXECUTE ON PROCEDURE **appDBName**.CREATEISOLATEUSER TO 'dbUser'@'**webServer | localhost**';
-GRANT EXECUTE ON PROCEDURE **appDBName**.DROPISOLATEUSER TO 'dbUser'@'**webServer | localhost**';
- */

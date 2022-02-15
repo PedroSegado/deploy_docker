@@ -196,7 +196,7 @@ $CFG->lang=(getenv('TSUGI_LANG') ?: 'en');
 // allow folks to request keys for the service
 $CFG->ownername = getenv('TSUGI_OWNER_NAME');  // 'Charles Severance'
 $CFG->owneremail = getenv('TSUGI_OWNER_EMAIL'); // 'csev@example.com'
-$CFG->providekeys = true;  // true
+$CFG->providekeys = getenv('TSUGI_PROVIDE_KEYS');  // true
 //$CFG->autoapprovekeys = false; // A regex like - '/.+@gmail\\.com/'
 
 // Go to https://console.developers.google.com/apis/credentials
@@ -287,7 +287,7 @@ $CFG->badge_assert_salt = false; // "mediumlengthhexstring";
 // menus will feature prominently in the UI.  In production, this should be
 // set to false so these non-end-user features are less prominent in the
 // navigation.
-$CFG->DEVELOPER = false;
+$CFG->DEVELOPER = getenv('TSUGI_DEVELOPER_MODE');
 
 // Is this is true, Tsugi will do a translation log into the table
 // tsugi_string while the application is being executed.  This allows
