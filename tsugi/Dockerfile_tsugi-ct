@@ -20,8 +20,8 @@ RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local
 
 WORKDIR /var/www/html/tsugi/mod/codetest
 # RUN cp config_docker.php config.php
-CMD cp init-tsugi.sh /var/www/html/tsugi/admin/init-tsugi.sh && mkdir tmp && chmod 777 tmp && composer install && composer update && npm ci && npm run build && mkdir tmp/codetest && chmod 777 tmp/codetest && chmod 777 .
+CMD mkdir tmp && chmod 777 tmp && composer install && composer update && npm ci && npm run build && mkdir tmp/codetest && chmod 777 tmp/codetest && chmod 777 .
 
 WORKDIR /var/www/html/tsugi/admin
 
-ENTRYPOINT ["/bin/bash", "init-tsugi.sh"]
+ENTRYPOINT ["/bin/bash", "../mod/codetest/init-tsugi.sh"]

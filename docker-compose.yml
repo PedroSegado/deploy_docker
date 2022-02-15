@@ -56,7 +56,7 @@ services:
     ports:
       - 8079:8080
     volumes:
-      - './volumes/central-repostitory:/app/questions-storage:rw'
+      - './volumes/central-repository:/app/questions-storage:rw'
       - 'spring-files:/codetest'
   xml-validator:
     container_name: xml-validator_container
@@ -89,7 +89,7 @@ services:
     ports:
       - 3004:3003
     volumes:
-      - './volumes/feedback-manager:/app/feedback-manager:rw'
+      - './volumes/feedback-manager/minimal feedback:/app:rw'
   tsugi-mysql-db:
     container_name: tsugi_mysql_db_container
     image: 'mysql:5.7'
