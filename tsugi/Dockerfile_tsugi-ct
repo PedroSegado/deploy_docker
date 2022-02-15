@@ -16,33 +16,12 @@ RUN . "$NVM_DIR/nvm.sh" && nvm use v${NODE_VERSION}
 RUN . "$NVM_DIR/nvm.sh" && nvm alias default v${NODE_VERSION}
 ENV PATH="/root/.nvm/versions/node/v${NODE_VERSION}/bin/:${PATH}"
 
-RUN mkdir -p /var/www/html/tsugi
-
-# WORKDIR /var/www/html/tsugi
-# RUN cp config_docker.php config.php
-
-RUN mkdir -p /var/www/html/tsugi/mod/codetest
+RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
 
 WORKDIR /var/www/html/tsugi/mod/codetest
 # RUN cp config_docker.php config.php
-RUN cp init-tsugi.sh /var/www/html/tsugi/admin/init-tsugi.sh
-
-RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
-RUN composer install
-RUN composer update
-
-RUN npm ci
-RUN npm run build
-
-RUN mkdir tmp && chmod 777 tmp
-
-RUN cd /tmp && mkdir codetest && chmod 777 codetest
-
-WORKDIR /var/www/html/tsugi/mod
-RUN chmod 777 codetest
+CMD cp init-tsugi.sh /var/www/html/tsugi/admin/init-tsugi.sh && mkdir tmp && chmod 777 tmp && composer install && composer update && npm ci && npm run build && mkdir tmp/codetest && chmod 777 tmp/codetest && chmod 777 .
 
 WORKDIR /var/www/html/tsugi/admin
-
-EXPOSE 80
 
 ENTRYPOINT ["/bin/bash", "init-tsugi.sh"]

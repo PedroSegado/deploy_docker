@@ -1,13 +1,7 @@
 FROM openjdk:8-jdk
 
-RUN apt-get update
-
-RUN apt-get install -y git
-
 WORKDIR /app/questions-storage
-
-RUN chmod +x mvnw
 
 EXPOSE 8080
 
-ENTRYPOINT [ "./mvnw", "spring-boot:run" ]
+CMD chmod +x mvnw && ./mvnw spring-boot:run
