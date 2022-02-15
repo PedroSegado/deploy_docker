@@ -52,7 +52,7 @@ services:
       JWT_SECRET: ${SPRING_JWT_SECRET}
       REGISTER_SECRET: ${CENTRAL_REPOSITORY_REGISTER_PASS}
     build:
-      context: ./central-repostitory/
+      context: ./central-repository/
       dockerfile: Dockerfile_repo
       args:
           REPO_BRANCH: ${REPO_BRANCH}
@@ -61,7 +61,7 @@ services:
     ports:
       - 8079:8080
     volumes:
-      - './central-repostitory/application.properties:/app/questions-storage/src/main/resources/application.properties:rw'
+      - './central-repository/application.properties:/app/questions-storage/src/main/resources/application.properties:rw'
       - 'spring-files:/codetest'
   xml-validator:
     container_name: xml-validator_container
