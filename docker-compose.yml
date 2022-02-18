@@ -38,8 +38,6 @@ services:
       args:
         TSUGI_BRANCH: ${TSUGI_BRANCH}
         CODETEST_BRANCH: ${CODETEST_BRANCH}
-    ports:
-      - 80:80
     command: bash -c "/var/www/html/tsugi/mod/codetest/init-tsugi.sh"
     stdin_open: true
     tty: true
@@ -65,8 +63,6 @@ services:
           REPO_BRANCH: ${REPO_BRANCH}
     depends_on:
       - spring-mongo-db
-    ports:
-      - 8080:8080
     volumes:
       - './central-repository/application.properties:/app/questions-storage/src/main/resources/application.properties:rw'
       - 'spring-files:/codetest'
@@ -121,6 +117,22 @@ services:
     volumes:
       - 'mongodb_data_container:/data/db'
       - ./mongodb/mongo-init.js:/docker-entrypoint-initdb.d/mongo-init.js:ro
+  nginx:
+    container_name: nginx_container
+    image: nginx
+    restart: unless-stopped
+    depends_on:
+      - tsugi-codetest
+    volumes:
+      - ./nginx:/etc/nginx/templates
+      - ./gateway:/app/static
+    ports:
+      - "80:80"
+      - "443:443"
+    environment:
+      NGINX_SPRING_REPO_URL: ${NGINX_SPRING_REPO_URL}
+      NGINX_APPLICATION_URL: ${NGINX_APPLICATION_URL}
+      NGINX_TSUGI_URL: ${NGINX_TSUGI_URL}
 volumes:
   mongodb_data_container:
   mysql_data_container:
