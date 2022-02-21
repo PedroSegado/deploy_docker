@@ -290,7 +290,7 @@ $CFG->badge_assert_salt = false; // "mediumlengthhexstring";
 // menus will feature prominently in the UI.  In production, this should be
 // set to false so these non-end-user features are less prominent in the
 // navigation.
-$CFG->DEVELOPER = false;
+$CFG->DEVELOPER = getenv('TSUGI_PROVIDE_KEYS') == 'true';
 
 // Is this is true, Tsugi will do a translation log into the table
 // tsugi_string while the application is being executed.  This allows
