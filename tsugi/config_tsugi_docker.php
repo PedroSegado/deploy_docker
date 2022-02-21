@@ -34,9 +34,9 @@ $apphome = false;
 if ( $apphome ) {
     $wwwroot = $apphome . '/tsugi';
 } else if ( U::get($_SERVER,'SERVER_PORT') == 8888 ) {
-    $wwwroot = 'http://'.(getenv('TSUGI_DOMAIN') ?: 'localhost').':8888/tsugi'; // Mac XAMP
+    $wwwroot = 'https://'.(getenv('TSUGI_DOMAIN') ?: 'localhost').':8888/tsugi'; // Mac XAMP
 } else {
-    $wwwroot = 'http://'.(getenv('TSUGI_DOMAIN') ?: 'localhost').'/tsugi';
+    $wwwroot = 'https://'.(getenv('TSUGI_DOMAIN') ?: 'localhost').'/tsugi';
 }
 // Once you are on a real server delete the above if statement
 // and set the wwwroot directly.  This must be the actual URL used
@@ -290,7 +290,7 @@ $CFG->badge_assert_salt = false; // "mediumlengthhexstring";
 // menus will feature prominently in the UI.  In production, this should be
 // set to false so these non-end-user features are less prominent in the
 // navigation.
-$CFG->DEVELOPER = getenv('TSUGI_PROVIDE_KEYS') == 'true';
+$CFG->DEVELOPER = getenv('TSUGI_DEVELOPER_MODE') == 'true';
 
 // Is this is true, Tsugi will do a translation log into the table
 // tsugi_string while the application is being executed.  This allows
