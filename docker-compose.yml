@@ -72,10 +72,10 @@ services:
     restart: unless-stopped
     build:
       context: ./validators/
-      dockerfile: Dockerfile_validator
+      dockerfile: Dockerfile_xml_validator
       args:
         GITHUB_TOKEN: ${GITHUB_TOKEN}
-        VALIDATOR_BRANCH: ${VALIDATOR_BRANCH}
+        XML_VALIDATOR_BRANCH: ${XML_VALIDATOR_BRANCH}
     environment:
       FEEDBACK_MANAGER_URL: ${FEEDBACK_MANAGER_URL}
       BASE_URL: ${XML_EVALUATOR_REQUESTS_BASE_URL}/api
