@@ -34,9 +34,9 @@ $apphome = false;
 if ( $apphome ) {
     $wwwroot = $apphome . '/tsugi';
 } else if ( U::get($_SERVER,'SERVER_PORT') == 8888 ) {
-    $wwwroot = 'http://'.(getenv('TSUGI_DOMAIN') ?: 'localhost').':8888/tsugi'; // Mac XAMP
+    $wwwroot = 'https://'.(getenv('TSUGI_DOMAIN') ?: 'localhost').':8888/tsugi'; // Mac XAMP
 } else {
-    $wwwroot = 'http://'.(getenv('TSUGI_DOMAIN') ?: 'localhost').'/tsugi';
+    $wwwroot = 'https://'.(getenv('TSUGI_DOMAIN') ?: 'localhost').'/tsugi';
 }
 // Once you are on a real server delete the above if statement
 // and set the wwwroot directly.  This must be the actual URL used
@@ -196,14 +196,17 @@ $CFG->lang=(getenv('TSUGI_LANG') ?: 'en');
 // allow folks to request keys for the service
 $CFG->ownername = getenv('TSUGI_OWNER_NAME');  // 'Charles Severance'
 $CFG->owneremail = getenv('TSUGI_OWNER_EMAIL'); // 'csev@example.com'
-$CFG->providekeys = getenv('TSUGI_PROVIDE_KEYS');  // true
+$CFG->providekeys = getenv('TSUGI_PROVIDE_KEYS') == 'true';  // true
 //$CFG->autoapprovekeys = false; // A regex like - '/.+@gmail\\.com/'
 
 // Go to https://console.developers.google.com/apis/credentials
 // create a new OAuth 2.0 credential for a web application,
+
+$envClientId = !getenv('TSUGI_GOOGLE_CLIENT_ID') || getenv('TSUGI_GOOGLE_CLIENT_ID') == 'false' ? false : getenv('TSUGI_GOOGLE_CLIENT_ID');
+$envClientSecret = !getenv('TSUGI_GOOGLE_CLIENT_SECRET') || getenv('TSUGI_GOOGLE_CLIENT_SECRET') == 'false' ? false : getenv('TSUGI_GOOGLE_CLIENT_ID');
 // get the key and secret, and put them here:
-$CFG->google_client_id = getenv('TSUGI_GOOGLE_CLIENT_ID'); // false; // '96041-nljpjj8jlv4.apps.googleusercontent.com';
-$CFG->google_client_secret = getenv('TSUGI_GOOGLE_CLIENT_SECRET'); // false; // '6Q7w_x4ESrl29a';
+$CFG->google_client_id = $envClientId; // false; // '96041-nljpjj8jlv4.apps.googleusercontent.com';
+$CFG->google_client_secret = $envClientSecret; // false; // '6Q7w_x4ESrl29a';
 
 // This is a legacy backwards compatibility.   In the round-trip to Google it used to
 // come back login.php after login was successful - If this is true, we come back
@@ -287,7 +290,7 @@ $CFG->badge_assert_salt = false; // "mediumlengthhexstring";
 // menus will feature prominently in the UI.  In production, this should be
 // set to false so these non-end-user features are less prominent in the
 // navigation.
-$CFG->DEVELOPER = getenv('TSUGI_DEVELOPER_MODE');
+$CFG->DEVELOPER = getenv('TSUGI_DEVELOPER_MODE') == 'true';
 
 // Is this is true, Tsugi will do a translation log into the table
 // tsugi_string while the application is being executed.  This allows
