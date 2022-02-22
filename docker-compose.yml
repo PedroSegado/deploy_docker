@@ -82,6 +82,23 @@ services:
       PORT: ${XML_EVALUATOR_PORT}
       EMAIL: ${XML_EVALUATOR_REQUESTS_EMAIL}
       PASSWORD: ${XML_EVALUATOR_REQUESTS_PASSWORD}
+  java-validator:
+    container_name: java-validator_container
+    image: java-validator_img
+    restart: unless-stopped
+    build:
+      context: ./validators/
+      dockerfile: Dockerfile_java_validator
+      args:
+        GITHUB_TOKEN: ${GITHUB_TOKEN}
+        NODE_VERSION: ${NODE_VERSION}
+        JAVA_VALIDATOR_BRANCH: ${JAVA_VALIDATOR_BRANCH}
+    environment:
+      FEEDBACK_MANAGER_URL: ${FEEDBACK_MANAGER_URL}
+      BASE_URL: ${XML_EVALUATOR_REQUESTS_BASE_URL}/api
+      PORT: ${XML_EVALUATOR_PORT}
+      EMAIL: ${XML_EVALUATOR_REQUESTS_EMAIL}
+      PASSWORD: ${XML_EVALUATOR_REQUESTS_PASSWORD}
   feedback-manager:
     container_name: feedback-manager_container
     image: feedback-manager_img
