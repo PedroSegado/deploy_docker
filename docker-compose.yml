@@ -44,6 +44,8 @@ services:
     volumes:
       - "./tsugi/config_tsugi_docker.php:/var/www/html/tsugi/config.php:rw"
       - "./codetest/config_codetest_docker.php:/var/www/html/tsugi/mod/codetest/config.php:rw"
+    ports:
+      - 8181:80
   spring-codetest:
     container_name: spring_codetest_container
     image: spring_codetest_img
@@ -66,6 +68,8 @@ services:
     volumes:
       - './central-repository/application.properties:/app/questions-storage/src/main/resources/application.properties:rw'
       - 'spring-files:/codetest'
+    ports:
+      - 8079:8080
   xml-validator:
     container_name: xml-validator_container
     image: xml-validator_img
@@ -82,6 +86,8 @@ services:
       PORT: ${XML_EVALUATOR_PORT}
       EMAIL: ${XML_EVALUATOR_REQUESTS_EMAIL}
       PASSWORD: ${XML_EVALUATOR_REQUESTS_PASSWORD}
+    ports:
+      - 3002:3000
   java-validator:
     container_name: java-validator_container
     image: java-validator_img
@@ -99,6 +105,8 @@ services:
       PORT: ${XML_EVALUATOR_PORT}
       EMAIL: ${XML_EVALUATOR_REQUESTS_EMAIL}
       PASSWORD: ${XML_EVALUATOR_REQUESTS_PASSWORD}
+    ports:
+      - 3002:3000
   feedback-manager:
     container_name: feedback-manager_container
     image: feedback-manager_img
@@ -112,6 +120,8 @@ services:
         GITHUB_TOKEN: ${GITHUB_TOKEN}
         PORT: ${FEEDBACK_MANAGER_PORT}
         FEEDBACK_MANAGER_BRANCH: ${FEEDBACK_MANAGER_BRANCH}
+    ports:
+      - 3001:3003
   tsugi-mysql-db:
     container_name: tsugi_mysql_db_container
     image: 'mysql:5.7'
@@ -123,6 +133,8 @@ services:
       MYSQL_PASSWORD: ${MYSQL_PASSWORD}
     volumes:
       - 'mysql_data_container:/var/lib/mysql:delegated'
+    ports:
+      - 3307:3306
   spring-mongo-db:
     container_name: spring_mongo_db_container
     image: 'mongo:4.4.9'
@@ -134,23 +146,25 @@ services:
     volumes:
       - 'mongodb_data_container:/data/db'
       - ./mongodb/mongo-init.js:/docker-entrypoint-initdb.d/mongo-init.js:ro
-  nginx:
-    container_name: nginx_container
-    image: nginx
-    restart: unless-stopped
-    depends_on:
-      - tsugi-codetest
-    volumes:
-      - ./nginx:/etc/nginx/templates
-      - ./gateway:/app/static
-      - /opt/certs:/opt/certs
     ports:
-      - "80:80"
-      - "443:443"
-    environment:
-      NGINX_SPRING_REPO_URL: ${NGINX_SPRING_REPO_URL}
-      NGINX_APPLICATION_URL: ${NGINX_APPLICATION_URL}
-      NGINX_TSUGI_URL: ${NGINX_TSUGI_URL}
+      - 27018:27017
+  # nginx:
+  #   container_name: nginx_container
+  #   image: nginx
+  #   restart: unless-stopped
+  #   depends_on:
+  #     - tsugi-codetest
+  #   volumes:
+  #     - ./nginx:/etc/nginx/templates
+  #     - ./gateway:/app/static
+  #     - /opt/certs:/opt/certs
+  #   ports:
+  #     - "80:80"
+  #     - "443:443"
+  #   environment:
+  #     NGINX_SPRING_REPO_URL: ${NGINX_SPRING_REPO_URL}
+  #     NGINX_APPLICATION_URL: ${NGINX_APPLICATION_URL}
+  #     NGINX_TSUGI_URL: ${NGINX_TSUGI_URL}
 volumes:
   mongodb_data_container:
   mysql_data_container:
