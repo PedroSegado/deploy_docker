@@ -203,7 +203,7 @@ $CFG->providekeys = getenv('TSUGI_PROVIDE_KEYS') == 'true';  // true
 // create a new OAuth 2.0 credential for a web application,
 
 $envClientId = !getenv('TSUGI_GOOGLE_CLIENT_ID') || getenv('TSUGI_GOOGLE_CLIENT_ID') == 'false' ? false : getenv('TSUGI_GOOGLE_CLIENT_ID');
-$envClientSecret = !getenv('TSUGI_GOOGLE_CLIENT_SECRET') || getenv('TSUGI_GOOGLE_CLIENT_SECRET') == 'false' ? false : getenv('TSUGI_GOOGLE_CLIENT_ID');
+$envClientSecret = !getenv('TSUGI_GOOGLE_CLIENT_SECRET') || getenv('TSUGI_GOOGLE_CLIENT_SECRET') == 'false' ? false : getenv('TSUGI_GOOGLE_CLIENT_SECRET');
 // get the key and secret, and put them here:
 $CFG->google_client_id = $envClientId; // false; // '96041-nljpjj8jlv4.apps.googleusercontent.com';
 $CFG->google_client_secret = $envClientSecret; // false; // '6Q7w_x4ESrl29a';
