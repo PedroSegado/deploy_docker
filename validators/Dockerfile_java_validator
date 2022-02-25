@@ -1,9 +1,7 @@
 FROM openjdk:11-jdk
-ARG GITHUB_TOKEN=${GITHUB_TOKEN}
-ARG JAVA_VALIDATOR_BRANCH=${JAVA_VALIDATOR_BRANCH}
 ARG NODE_VERSION=${NODE_VERSION}
 
-RUN apt-get update && apt-get install -y git curl
+RUN apt-get update && apt-get install -y curl
 
 ENV NVM_DIR=/root/.nvm
 RUN curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.0/install.sh | bash
@@ -14,11 +12,7 @@ ENV PATH="/root/.nvm/versions/node/v${NODE_VERSION}/bin/:${PATH}"
 
 WORKDIR /app
 
-RUN git config --global url."https://${GITHUB_TOKEN}@github.com/".insteadOf "https://github.com/"
-
-RUN git clone --branch ${JAVA_VALIDATOR_BRANCH} https://github.com/KA226-COVID/java-evaluator.git
-
-#COPY ./src_volumes/java-evaluator/ /app/java-evaluator/
+COPY ./src_volume/java-evaluator/ /app/java-evaluator/
 
 WORKDIR /app/java-evaluator/server
 

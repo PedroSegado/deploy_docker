@@ -1,56 +1,49 @@
-FROM php:7.3.21-apache
+# Webpack state
+# -------------------------------------------------------------------------
 
-ARG TSUGI_BRANCH=${TSUGI_BRANCH}
-ARG CODETEST_BRANCH=${CODETEST_BRANCH}
+FROM node:16.13.2 AS node-build
 
-WORKDIR /git-clones
+COPY ./src_volume/codetest /app/codetest
 
+WORKDIR /app/codetest
+
+# Bundled assets are at /app/codetest/public/build
+RUN npm ci && npm run build
+
+
+# Tsugi stage
+# -------------------------------------------------------------------------
+
+FROM php:7.3.21-apache AS php-setup
+
+# PHP extensions
 RUN apt-get update && apt-get install -y git netcat libzip-dev zip && apt-get clean -y
 RUN docker-php-ext-install pdo pdo_mysql mysqli zip
 RUN a2enmod rewrite
+# PHP Composer
+RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
 
-
-ENV NODE_VERSION=16.13.2
-ENV NVM_DIR=/root/.nvm
-RUN apt install -y curl
-RUN curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.0/install.sh | bash
-RUN . "$NVM_DIR/nvm.sh" && nvm install ${NODE_VERSION}
-RUN . "$NVM_DIR/nvm.sh" && nvm use v${NODE_VERSION}
-RUN . "$NVM_DIR/nvm.sh" && nvm alias default v${NODE_VERSION}
-ENV PATH="/root/.nvm/versions/node/v${NODE_VERSION}/bin/:${PATH}"
-
-
-RUN git clone --branch ${TSUGI_BRANCH} https://github.com/KA226-COVID/tsugi.git
-RUN mkdir -p /var/www/html/
-RUN cp -R tsugi/ /var/www/html/
-
-# WORKDIR /var/www/html/tsugi
-# RUN cp config_docker.php config.php
-
-RUN git clone --branch ${CODETEST_BRANCH} https://github.com/KA226-COVID/codetest.git
-RUN mkdir -p /var/www/html/tsugi/mod/
-RUN cp -R codetest/ /var/www/html/tsugi/mod/
+COPY ./src_volume/tsugi/                       /var/www/html/tsugi/
+COPY ./src_volume/codetest/                    /var/www/html/tsugi/mod/codetest/
+COPY ./src_volume/codetest/init-tsugi.sh       /var/www/html/tsugi/admin/init-tsugi.sh
 
 WORKDIR /var/www/html/tsugi/mod/codetest
-# RUN cp config_docker.php config.php
-RUN cp init-tsugi.sh /var/www/html/tsugi/admin/init-tsugi.sh
 
-RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
-RUN composer install
-RUN composer update
+RUN composer install && composer update
 
-RUN npm ci
-RUN npm run build
-
-RUN mkdir tmp && chmod 777 tmp
-
-RUN cd /tmp && mkdir codetest && chmod 777 codetest
+RUN mkdir tmp && chmod 777 tmp && cd /tmp && mkdir codetest && chmod 777 codetest
 
 WORKDIR /var/www/html/tsugi/mod
+
 RUN chmod 777 codetest
 
 WORKDIR /var/www/html/tsugi/admin
 
+# Fix EOL from windows
+RUN sed -i 's/\r$//' init-tsugi.sh
+
 EXPOSE 80
+
+COPY --from=node-build /app/codetest/public/ /var/www/html/tsugi/mod/codetest/public/
 
 ENTRYPOINT ["/bin/bash", "init-tsugi.sh"]
