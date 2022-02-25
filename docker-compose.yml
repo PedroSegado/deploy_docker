@@ -45,7 +45,7 @@ services:
     tty: true
     volumes:
       - "./tsugi/config_tsugi_docker.php:/var/www/html/tsugi/config.php:rw"
-      - "./codetest/config_codetest_docker.php:/var/www/html/tsugi/mod/codetest/config.php:rw"
+      - "./tsugi/config_codetest_docker.php:/var/www/html/tsugi/mod/codetest/config.php:rw"
   spring-codetest:
     container_name: spring_codetest_container
     image: spring_codetest_img
