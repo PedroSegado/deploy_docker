@@ -202,11 +202,14 @@ $CFG->providekeys = getenv('TSUGI_PROVIDE_KEYS') == 'true';  // true
 // Go to https://console.developers.google.com/apis/credentials
 // create a new OAuth 2.0 credential for a web application,
 
-$envClientId = !getenv('TSUGI_GOOGLE_CLIENT_ID') || getenv('TSUGI_GOOGLE_CLIENT_ID') == 'false' ? false : getenv('TSUGI_GOOGLE_CLIENT_ID');
-$envClientSecret = !getenv('TSUGI_GOOGLE_CLIENT_SECRET') || getenv('TSUGI_GOOGLE_CLIENT_SECRET') == 'false' ? false : getenv('TSUGI_GOOGLE_CLIENT_ID');
+function getFalseOrRealValue($val)
+{
+    return (!$val || $val == 'false') ? false : $val;
+}
+
 // get the key and secret, and put them here:
-$CFG->google_client_id = $envClientId; // false; // '96041-nljpjj8jlv4.apps.googleusercontent.com';
-$CFG->google_client_secret = $envClientSecret; // false; // '6Q7w_x4ESrl29a';
+$CFG->google_client_id = getFalseOrRealValue(getenv('TSUGI_GOOGLE_CLIENT_ID')); // false; // '96041-nljpjj8jlv4.apps.googleusercontent.com';
+$CFG->google_client_secret = getFalseOrRealValue(getenv('TSUGI_GOOGLE_CLIENT_ID')); // false; // '6Q7w_x4ESrl29a';
 
 // This is a legacy backwards compatibility.   In the round-trip to Google it used to
 // come back login.php after login was successful - If this is true, we come back
@@ -343,8 +346,8 @@ $CFG->cookiename = 'TSUGIAUTO';
 $CFG->cookiepad = '390b246ea9';
 
 // Where the bulk mail comes from - should be a real address with a wildcard box you check
-$CFG->maildomain = false; // 'mail.example.com';
-$CFG->mailsecret = 'warning:please-change-mailsecret-92ds29';
+$CFG->maildomain = getFalseOrRealValue(getenv('TSUGI_MAIL_DOMAIN')); // 'mail.example.com';
+$CFG->mailsecret = getFalseOrRealValue(getenv('TSUGI_MAIL_SECRET'));
 $CFG->maileol = "\n";  // Depends on your mailer - may need to be \r\n
 
 // Set the nonce clearing factor and expiry time

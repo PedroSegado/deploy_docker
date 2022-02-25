@@ -27,6 +27,8 @@ services:
       TSUGI_OWNER_EMAIL: ${TSUGI_OWNER_EMAIL}
       TSUGI_PROVIDE_KEYS: ${TSUGI_PROVIDE_KEYS}
       TSUGI_DEVELOPER_MODE: ${TSUGI_DEVELOPER_MODE}
+      TSUGI_MAIL_DOMAIN: ${TSUGI_MAIL_DOMAIN}
+      TSUGI_MAIL_SECRET: ${TSUGI_MAIL_SECRET}
       CENTRAL_REPOSITORY_USER: ${CENTRAL_REPOSITORY_USER}
       CENTRAL_REPOSITORY_PASS: ${CENTRAL_REPOSITORY_PASS}
       AK_BASE_URL: ${AK_BASE_URL}
@@ -43,9 +45,7 @@ services:
     tty: true
     volumes:
       - "./tsugi/config_tsugi_docker.php:/var/www/html/tsugi/config.php:rw"
-      - "./codetest/config_codetest_docker.php:/var/www/html/tsugi/mod/codetest/config.php:rw"
-    ports:
-      - 8181:80
+      - "./tsugi/config_codetest_docker.php:/var/www/html/tsugi/mod/codetest/config.php:rw"
   spring-codetest:
     container_name: spring_codetest_container
     image: spring_codetest_img
