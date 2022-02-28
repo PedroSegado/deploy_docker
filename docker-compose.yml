@@ -70,6 +70,7 @@ services:
       - 'spring-files:/codetest'
     ports:
       - 8079:8080
+      - 8015:5005
   xml-validator:
     container_name: xml-validator_container
     image: xml-validator_img
@@ -106,7 +107,7 @@ services:
       EMAIL: ${XML_EVALUATOR_REQUESTS_EMAIL}
       PASSWORD: ${XML_EVALUATOR_REQUESTS_PASSWORD}
     ports:
-      - 3002:3000
+      - 3003:3000
   feedback-manager:
     container_name: feedback-manager_container
     image: feedback-manager_img
