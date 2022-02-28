@@ -22,6 +22,12 @@ It's composed by:
 - A node with Node.js [ 16.13.2 ]
   - To be used by the [feedback-manager](https://github.com/KA226-COVID/feedback-manager)
 
+- A node with Java [ 11 ] and Node.js [ 16.13.2 ] installed
+  - To be used by the [java-validator](https://github.com/KA226-COVID/java-evaluator)
+
+- A node with Nginx [ latest ]
+  - To be used as a reverse proxy and act as gateway
+
 <br>
 
 Before starting the docker-compose, you must clone the `.env.example` file to a new file called `.env`
@@ -33,6 +39,8 @@ After that if you have Docker and docker-compose installed
 To get the docker environment running just run this command in the root folder of this project:
 
     docker-compose up
+
+> Use `docker-compose up -d` to run it detached (on the background)
 
 <br>
 
@@ -47,3 +55,15 @@ To get the docker environment running just run this command in the root folder o
 To rebuild a container with the latests code changes you'll need to run this command:
 
     docker-compose build --no-cache --force-rm <service-name>
+
+To restart a specific container you'll need to run this command:
+
+    docker-compose restart <service-name>
+
+To stream the logs of a specific container you'll need to run this command:
+
+    docker-compose logs -f <service-name>
+
+### Debug of central-repository (spring-boot)
+
+It's posible to attach a remote debugger to the docker container from the host machine of the docker container connected
