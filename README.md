@@ -26,7 +26,11 @@ It's composed by:
 
 Before starting the docker-compose, you must clone the `.env.example` file to a new file called `.env`
 
-And then configure your variables there, like adding a github token with read access to this repositories ([xml-evaluator](https://github.com/KA226-COVID/xml-evaluator), [feedback-manager](https://github.com/KA226-COVID/feedback-manager)) or changing passwords
+And then configure your variables there, like adding a github token with read access to this repositories ([xml-evaluator](https://github.com/KA226-COVID/xml-evaluator), [feedback-manager](https://github.com/KA226-COVID/feedback-manager)) or changing passwords.
+
+You also must generate a RSA private key and certificate with:
+
+    openssl req -newkey rsa:2048 -nodes -keyout ./nginx/certs/privkey.pem -x509 -days 2000 -out ./nginx/certs/fullchain.pem
 
 After that if you have Docker and docker-compose installed
 
@@ -38,8 +42,8 @@ To get the docker environment running just run this command in the root folder o
 
 > After the docker-initialization is done you will be able to access:
 
-- Tsugi at `http://localhost/tsugi`
-- Codetest at `http://localhost/tsugi/mod/codetest`
+- Tsugi at `https://localhost/tsugi`
+- Codetest at `https://localhost/tsugi/mod/codetest/`
 - Spring API at `http://localhost:8080/api`
 
 <br>

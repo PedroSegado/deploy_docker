@@ -144,9 +144,9 @@ services:
     depends_on:
       - tsugi-codetest
     volumes:
-      - ./nginx:/etc/nginx/templates
+      - ./nginx/templates:/etc/nginx/templates
       - ./gateway:/app/static
-      - /opt/certs:/opt/certs
+      - ./nginx/certs:/opt/certs
     ports:
       - "80:80"
       - "443:443"
