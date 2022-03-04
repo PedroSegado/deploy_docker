@@ -102,6 +102,8 @@ services:
       PORT: ${XML_EVALUATOR_PORT}
       EMAIL: ${XML_EVALUATOR_REQUESTS_EMAIL}
       PASSWORD: ${XML_EVALUATOR_REQUESTS_PASSWORD}
+    volumes:
+      - './validators/src_volume/java-evaluator/server/dev-server:/app/java-evaluator/server/dev-server'
   feedback-manager:
     container_name: feedback-manager_container
     image: feedback-manager_img
