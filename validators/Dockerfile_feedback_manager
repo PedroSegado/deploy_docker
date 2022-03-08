@@ -4,7 +4,7 @@ WORKDIR /app
 
 COPY ./src_volume/feedback-manager/ /app/feedback-manager/
 
-WORKDIR /app/feedback-manager/minimal feedback
+WORKDIR "/app/feedback-manager/minimal feedback"
 
 RUN npm i
 

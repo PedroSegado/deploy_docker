@@ -1,5 +1,4 @@
-@echo off
-FOR /F "eol=# tokens=*" %%i IN .env DO SET %%i
+. .env
 
 cd ./tsugi
 mkdir src_volume
@@ -19,8 +18,8 @@ cd ..
 cd ./validators
 mkdir src_volume
 cd src_volume
-git clone --branch main                             https://%GITHUB_TOKEN%@github.com/KA226-COVID/feedback-manager.git
-git clone --branch deployment                       https://%GITHUB_TOKEN%@github.com/KA226-COVID/xml-evaluator.git
-git clone --branch master                           https://%GITHUB_TOKEN%@github.com/KA226-COVID/java-evaluator.git
+git clone --branch main                             https://${GITHUB_TOKEN}@github.com/KA226-COVID/feedback-manager.git
+git clone --branch deployment                       https://${GITHUB_TOKEN}@github.com/KA226-COVID/xml-evaluator.git
+git clone --branch master                           https://${GITHUB_TOKEN}@github.com/KA226-COVID/java-evaluator.git
 cd ..
 cd ..

@@ -1,7 +1,7 @@
 FROM openjdk:11-jdk
 ARG NODE_VERSION=${NODE_VERSION}
 
-RUN apt-get update && apt-get install -y curl
+RUN apt update && apt install -y curl
 
 ENV NVM_DIR=/root/.nvm
 RUN curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.0/install.sh | bash

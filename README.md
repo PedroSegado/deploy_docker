@@ -1,6 +1,6 @@
 ## JuezLTI Docker
 
-The project has a docker-compose with everything needed to run a full instance of JuezLTI
+The project has a docker-compose with everything needed to run a full developer instance of JuezLTI
 
 It's composed by:
 
@@ -30,9 +30,15 @@ It's composed by:
 
 <br>
 
-Before starting the docker-compose, you must clone the `.env.example` file to a new file called `.env`
+Before starting the docker-compose, you must:
 
-And then configure your variables there, like adding a github token with read access to this repositories ([xml-evaluator](https://github.com/KA226-COVID/xml-evaluator), [feedback-manager](https://github.com/KA226-COVID/feedback-manager)) or changing passwords
+- Clone the `.env.example` file to a new file called `.env`
+	- Configure your variables there, like adding a github token with read access to this repositories ([xml-evaluator](https://github.com/KA226-COVID/xml-evaluator), [feedback-manager](https://github.com/KA226-COVID/feedback-manager)) or changing passwords
+
+- Run the script provided (windows)<b>(clone-repos.bat)</b>, (linux)<b>(clone-repos.sh)</b> to clone all needed repositories
+
+- Create a self-signed certificate to access our localhost services via SSL. To do that you must follow this guide ([Generate_Certs](generate_certs.md)) once finished you must copy the files <b>"(yourKey).key"</b> and <b>"(yourKeyCrt).crt"</b> inside the ./nginx/certs folder
+	- Inside this file <b>./nginx/default.conf.template</b>, you also must rename <b>ssl_certificate_key</b> value by /opt/certs/(yourKey).key; and <b>ssl_certificate</b> value by /opt/certs/(yourKeyCrt).crt;  
 
 After that if you have Docker and docker-compose installed
 
@@ -46,9 +52,11 @@ To get the docker environment running just run this command in the root folder o
 
 > After the docker-initialization is done you will be able to access:
 
-- Tsugi at `http://localhost/tsugi`
-- Codetest at `http://localhost/tsugi/mod/codetest`
-- Spring API at `http://localhost:8080/api`
+- Tsugi at `https://localhost/tsugi`
+
+- Codetest at `https://localhost/tsugi/mod/codetest`
+
+- Spring API at `https://localhost/api`
 
 <br>
 
@@ -65,5 +73,4 @@ To stream the logs of a specific container you'll need to run this command:
     docker-compose logs -f <service-name>
 
 ### Debug of central-repository (spring-boot)
-
 It's posible to attach a remote debugger to the docker container from the host machine of the docker container connected

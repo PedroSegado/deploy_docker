@@ -149,23 +149,23 @@ services:
       - ./mongodb/mongo-init.js:/docker-entrypoint-initdb.d/mongo-init.js:ro
     ports:
       - 27018:27017
-  # nginx:
-  #   container_name: nginx_container
-  #   image: nginx
-  #   restart: unless-stopped
-  #   depends_on:
-  #     - tsugi-codetest
-  #   volumes:
-  #     - ./nginx:/etc/nginx/templates
-  #     - ./gateway:/app/static
-  #     - /opt/certs:/opt/certs
-  #   ports:
-  #     - "80:80"
-  #     - "443:443"
-  #   environment:
-  #     NGINX_SPRING_REPO_URL: ${NGINX_SPRING_REPO_URL}
-  #     NGINX_APPLICATION_URL: ${NGINX_APPLICATION_URL}
-  #     NGINX_TSUGI_URL: ${NGINX_TSUGI_URL}
+  nginx:
+    container_name: nginx_container
+    image: nginx
+    restart: unless-stopped
+    depends_on:
+      - tsugi-codetest
+    volumes:
+      - ./nginx:/etc/nginx/templates
+      - ./gateway:/app/static
+      - ./nginx/certs:/opt/certs
+    ports:
+      - "80:80"
+      - "443:443"
+    environment:
+      NGINX_SPRING_REPO_URL: ${NGINX_SPRING_REPO_URL}
+      NGINX_APPLICATION_URL: ${NGINX_APPLICATION_URL}
+      NGINX_TSUGI_URL: ${NGINX_TSUGI_URL}
 volumes:
   mongodb_data_container:
   mysql_data_container:
