@@ -37,10 +37,12 @@ Before starting the docker-compose, you must:
 
 - Run the script provided (windows)<b>(clone-repos.bat)</b>, (linux)<b>(clone-repos.sh)</b> to clone all needed repositories
 
-- Create a self-signed certificate to access our localhost services via SSL. To do that you must follow this guide ([Generate_Certs](generate_certs.md)) once finished you must copy the files <b>"(yourKey).key"</b> and <b>"(yourKeyCrt).crt"</b> inside the ./nginx/certs folder
-	- Inside this file <b>./nginx/default.conf.template</b>, you also must rename <b>ssl_certificate_key</b> value by /opt/certs/(yourKey).key; and <b>ssl_certificate</b> value by /opt/certs/(yourKeyCrt).crt;  
+- Create a self-signed certificate to access our localhost services via SSL. To do that you must follow this guide ([Generate_Certs](generate_certs.md)) once finished you must copy the files <b>"(yourKey).key"</b> and <b>"(yourKeyCrt).crt"</b> inside the <b>./nginx/certs</b> folder. <b>IMPORTANT:</b> Folder ./nginx/certs does not exist by default. You must create it.
+- Edit <b>./nginx/default.conf.template</b> file, and change:
+  -  <b>ssl_certificate_key</b> value to <b>/opt/certs/(yourKey).key;</b> 
+  -  <b>ssl_certificate</b> value to <b>/opt/certs/(yourKeyCrt).crt;</b>  
 
-After that if you have Docker and docker-compose installed
+After that you must have Docker and docker-compose installed.
 
 To get the docker environment running just run this command in the root folder of this project:
 
