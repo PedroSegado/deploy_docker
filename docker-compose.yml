@@ -83,12 +83,10 @@ services:
         XML_VALIDATOR_BRANCH: ${XML_VALIDATOR_BRANCH}
     environment:
       FEEDBACK_MANAGER_URL: ${FEEDBACK_MANAGER_URL}
-      BASE_URL: ${XML_EVALUATOR_REQUESTS_BASE_URL}/api
+      BASE_URL: ${REPOSITORY_BASE_URL}/api
       PORT: ${XML_EVALUATOR_PORT}
-      EMAIL: ${XML_EVALUATOR_REQUESTS_EMAIL}
-      PASSWORD: ${XML_EVALUATOR_REQUESTS_PASSWORD}
-    ports:
-      - 3002:3000
+      EMAIL: ${REPOSITORY_EMAIL}
+      PASSWORD: ${REPOSITORY_PASSWORD}
   java-validator:
     container_name: java-validator_container
     image: java-validator_img
@@ -102,12 +100,50 @@ services:
         JAVA_VALIDATOR_BRANCH: ${JAVA_VALIDATOR_BRANCH}
     environment:
       FEEDBACK_MANAGER_URL: ${FEEDBACK_MANAGER_URL}
-      BASE_URL: ${XML_EVALUATOR_REQUESTS_BASE_URL}/api
+      BASE_URL: ${REPOSITORY_BASE_URL}/api
       PORT: ${XML_EVALUATOR_PORT}
-      EMAIL: ${XML_EVALUATOR_REQUESTS_EMAIL}
-      PASSWORD: ${XML_EVALUATOR_REQUESTS_PASSWORD}
-    ports:
-      - 3003:3000
+      EMAIL: ${REPOSITORY_EMAIL}
+      PASSWORD: ${REPOSITORY_PASSWORD}
+    volumes:
+      - './validators/src_volume/java-evaluator/server/dev-server:/app/java-evaluator/server/dev-server'
+  sql-validator:
+    container_name: sql-validator_container
+    image: sql-validator_img
+    restart: unless-stopped
+    build:
+      context: ./validators/
+      dockerfile: Dockerfile_sql_validator
+      args:
+        GITHUB_TOKEN: ${GITHUB_TOKEN}
+        NODE_VERSION: ${NODE_VERSION}
+    environment:
+      FEEDBACK_MANAGER_URL: ${FEEDBACK_MANAGER_URL}
+      BASE_URL: ${REPOSITORY_BASE_URL}/api
+      EMAIL: ${REPOSITORY_EMAIL}
+      PASSWORD: ${REPOSITORY_PASSWORD}
+      SQL_EVALUATOR_DBMS: ${SQL_EVALUATOR_DBMS}
+      SQL_EVALUATOR_PORT: ${SQL_POSTGRES_PORT}
+      SQL_EVALUATOR_USER: ${SQL_POSTGRES_USER}
+      SQL_EVALUATOR_PASSWORD: ${SQL_POSTGRES_PASSWORD}
+      SQL_EVALUATOR_DATABASE: ${SQL_POSTGRES_DATABASE}
+      SQL_EVALUATOR_HOST: ${SQL_EVALUATOR_HOST}
+      SQL_EVALUATOR_USERPREFIX: ${SQL_EVALUATOR_USERPREFIX}
+      CREATEISOLATEUSERPROCEDURE: ${CREATEISOLATEUSERPROCEDURE}
+      DROPISOLATEUSERPROCEDURE: ${DROPISOLATEUSERPROCEDURE}
+    volumes:
+      - './validators/src_volume/sql-evaluator/server/dev-server:/app/sql-evaluator/server/dev-server'
+    depends_on:
+      - db-validator-postgres
+  db-validator-postgres:
+    image: postgres
+    restart: always
+    environment:
+      POSTGRES_USER: ${SQL_POSTGRES_USER}
+      POSTGRES_PASSWORD: ${SQL_POSTGRES_PASSWORD}
+      POSTGRES_DATABASE: ${SQL_POSTGRES_DATABASE}
+      POSTGRES_PORT: ${SQL_POSTGRES_PORT}
+    volumes:
+      - ./validators/src_volume/sql-evaluator/sql_servers/postgres_sql/initScripts:/docker-entrypoint-initdb.d
   feedback-manager:
     container_name: feedback-manager_container
     image: feedback-manager_img
