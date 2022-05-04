@@ -1,18 +1,18 @@
 @echo off
-FOR /F "eol=# tokens=*" %%i IN .env DO SET %%i
+FOR /F "eol=# tokens=*" %%i IN (.env) DO SET %%i
 
 cd ./tsugi
 mkdir src_volume
 cd src_volume
 git clone --branch codetest-customizations          https://github.com/KA226-COVID/tsugi.git
-git clone --branch feat/external-validators         https://github.com/KA226-COVID/codetest.git
+git clone --branch master         https://github.com/KA226-COVID/codetest.git
 cd ..
 cd ..
 
 cd ./central-repository
 mkdir src_volume
 cd src_volume
-git clone --branch feat/files-mgmt                  https://github.com/KA226-COVID/questions-storage.git
+git clone --branch master                  https://github.com/KA226-COVID/questions-storage.git
 cd ..
 cd ..
 
