@@ -94,10 +94,6 @@ services:
     build:
       context: ./validators/
       dockerfile: Dockerfile_java_validator
-      args:
-        GITHUB_TOKEN: ${GITHUB_TOKEN}
-        NODE_VERSION: ${NODE_VERSION}
-        JAVA_VALIDATOR_BRANCH: ${JAVA_VALIDATOR_BRANCH}
     environment:
       FEEDBACK_MANAGER_URL: ${FEEDBACK_MANAGER_URL}
       BASE_URL: ${XML_EVALUATOR_REQUESTS_BASE_URL}/api
@@ -150,6 +146,7 @@ services:
     restart: unless-stopped
     environment:
       PORT: ${FEEDBACK_MANAGER_PORT}
+      FEEDBACK_MONGO_URI: ${FEEDBACK_MONGO_URI}
     build:
       context: ./validators/
       dockerfile: Dockerfile_feedback_manager
@@ -157,7 +154,6 @@ services:
         GITHUB_TOKEN: ${GITHUB_TOKEN}
         PORT: ${FEEDBACK_MANAGER_PORT}
         FEEDBACK_MANAGER_BRANCH: ${FEEDBACK_MANAGER_BRANCH}
-        FEEDBACK_MONGO_URI: ${FEEDBACK_MONGO_URI}
     ports:
       - 3001:3003
   tsugi-mysql-db:

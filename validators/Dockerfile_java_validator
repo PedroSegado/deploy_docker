@@ -1,16 +1,4 @@
-FROM openjdk:11-jdk
-ARG GITHUB_TOKEN=${GITHUB_TOKEN}
-ARG JAVA_VALIDATOR_BRANCH=${JAVA_VALIDATOR_BRANCH}
-ARG NODE_VERSION=${NODE_VERSION}
-
-RUN apt-get update && apt-get install -y git curl
-
-ENV NVM_DIR=/root/.nvm
-RUN curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.0/install.sh | bash
-RUN . "$NVM_DIR/nvm.sh" && nvm install ${NODE_VERSION}
-RUN . "$NVM_DIR/nvm.sh" && nvm use v${NODE_VERSION}
-RUN . "$NVM_DIR/nvm.sh" && nvm alias default v${NODE_VERSION}
-ENV PATH="/root/.nvm/versions/node/v${NODE_VERSION}/bin/:${PATH}"
+FROM node:16.13.2
 
 RUN npm install -g nodemon
 
