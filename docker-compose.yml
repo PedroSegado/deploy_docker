@@ -94,6 +94,8 @@ services:
     build:
       context: ./validators/
       dockerfile: Dockerfile_java_validator
+      args:
+        NODE_VERSION: ${NODE_VERSION}
     environment:
       FEEDBACK_MANAGER_URL: ${FEEDBACK_MANAGER_URL}
       BASE_URL: ${XML_EVALUATOR_REQUESTS_BASE_URL}/api
