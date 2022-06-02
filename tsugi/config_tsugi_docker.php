@@ -209,7 +209,7 @@ function getFalseOrRealValue($val)
 
 // get the key and secret, and put them here:
 $CFG->google_client_id = getFalseOrRealValue(getenv('TSUGI_GOOGLE_CLIENT_ID')); // false; // '96041-nljpjj8jlv4.apps.googleusercontent.com';
-$CFG->google_client_secret = getFalseOrRealValue(getenv('TSUGI_GOOGLE_CLIENT_ID')); // false; // '6Q7w_x4ESrl29a';
+$CFG->google_client_secret = getFalseOrRealValue(getenv('TSUGI_GOOGLE_CLIENT_SECRET')); // false; // '6Q7w_x4ESrl29a';
 
 // This is a legacy backwards compatibility.   In the round-trip to Google it used to
 // come back login.php after login was successful - If this is true, we come back

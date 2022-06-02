@@ -20,7 +20,7 @@ $CFG->repositoryUrl = getenv('SPRING_CODETEST_URL').":".getenv('SPRING_CODETEST_
 
 $CFG->type = [
     "PHP" => "PHP",
-    "MYSQL" => "MYSQL",
+    "SQL" => "SQL",
     "Python" => "Python",
     "Java" => "Java"
 ];
@@ -34,9 +34,9 @@ $CFG->validators = array(
         "name" => 'PHP',
         "baseUrl" => "http://{$CFG->repositoryUrl}/",
     ],
-    "MYSQL" => [
-        "name" => 'MYSQL',
-        "baseUrl" => "http://{$CFG->repositoryUrl}/",
+    "SQL" => [
+        "name" => "SQL",
+        "baseUrl" => "http://sql-validator:3000/",
     ],
     "Python" => [
         "name" => 'Python',
