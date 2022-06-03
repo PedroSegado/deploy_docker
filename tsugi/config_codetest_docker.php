@@ -25,11 +25,52 @@ $CFG->type = [
     "Java" => "Java"
 ];
 
+
 $CFG->validators = array(
     "Java" => [
         "name" => 'Java',
         "baseUrl" => "http://java-validator:3000/",
+        "capabilities" => [
+            "id" => "Java-evaluator",
+            "features" => [
+                [
+                    "name" => "language",
+                    "value" => "java",
+                ],
+                [
+                    "name" => "version",
+                    "value" => ".01",
+                ],
+                [
+                    "name" => "engine",
+                    "value" => "https://openjdk.java.net/",
+                ],
+            ],
+        ]
     ],
+
+    "XML" => [
+        "name" => 'XML',
+        "baseUrl" => "http://xml-validator:3000/",
+        "capabilities" => [
+            "id" => "XPath-evaluator",
+            "features" => [
+                [
+                    "name" => "language",
+                    "value" => "XPath",
+                ],
+                [
+                    "name" => "version",
+                    "value" => ".01",
+                ],
+                [
+                    "name" => "engine",
+                    "value" => "https://www.npmjs.com/package/xpath",
+                ],
+            ],
+        ]
+    ],
+    
     "PHP" => [
         "name" => 'PHP',
         "baseUrl" => "http://{$CFG->repositoryUrl}/",
