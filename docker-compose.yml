@@ -108,6 +108,11 @@ services:
     restart: unless-stopped
     environment:
       PORT: ${FEEDBACK_MANAGER_PORT}
+      FEEDBACK_MONGO_URI: ${FEEDBACK_MONGO_URI}
+      BASE_URL: ${XML_EVALUATOR_REQUESTS_BASE_URL}/api
+      BASE_PORT: ${XML_EVALUATOR_PORT}
+      EMAIL: ${XML_EVALUATOR_REQUESTS_EMAIL}
+      PASSWORD: ${XML_EVALUATOR_REQUESTS_PASSWORD}
     build:
       context: ./validators/
       dockerfile: Dockerfile_feedback_manager
