@@ -12,7 +12,7 @@ WORKDIR /app
 
 RUN git clone --branch ${FEEDBACK_MANAGER_BRANCH} https://github.com/KA226-COVID/feedback-manager.git
 
-WORKDIR /app/feedback-manager/minimal feedback
+WORKDIR "/app/feedback-manager"
 
 RUN npm i
 

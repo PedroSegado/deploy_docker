@@ -26,10 +26,61 @@ $CFG->repositoryUrl = getenv('SPRING_CODETEST_URL').":".getenv('SPRING_CODETEST_
 
 $CFG->type = [
     "PHP" => "PHP",
-    "MYSQL" => "MYSQL",
+    "SQL" => "SQL",
     "Python" => "Python",
     "Java" => "Java"
 ];
+
+
+$CFG->validators = array(
+    "Java" => [
+        "name" => 'Java',
+        "baseUrl" => "http://java-validator:3000/",
+        "capabilities" => [
+            "id" => "Java-evaluator",
+            "features" => [
+                [
+                    "name" => "language",
+                    "value" => "java",
+                ],
+                [
+                    "name" => "version",
+                    "value" => ".01",
+                ],
+                [
+                    "name" => "engine",
+                    "value" => "https://openjdk.java.net/",
+                ],
+            ],
+        ]
+    ],
+
+    "XML" => [
+        "name" => 'XML',
+        "baseUrl" => "http://xml-validator:3000/",
+        "capabilities" => [
+            "id" => "XPath-evaluator",
+            "features" => [
+                [
+                    "name" => "language",
+                    "value" => "XPath",
+                ],
+                [
+                    "name" => "version",
+                    "value" => ".01",
+                ],
+                [
+                    "name" => "engine",
+                    "value" => "https://www.npmjs.com/package/xpath",
+                ],
+            ],
+        ]
+    ],
+    "SQL" => [
+        "name" => "SQL",
+        "baseUrl" => "http://sql-validator:3000/",
+    ],
+);
 
 $CFG->apiConfigs = [
     "spring-repo" => [
@@ -44,82 +95,20 @@ $CFG->apiConfigs = [
         "user" => getenv('AK_USER'),
         "pass" => getenv('AK_PASS'),
     ],
-    "xml-validator" => [
-        // MUST HAVE A TRAILING SLASH
-        "baseUrl" => "http://".getenv('XML_EVALUATOR_URL').":".getenv('XML_EVALUATOR_PORT')."/",
-    ],
 ];
 
-$CFG->programmingLanguajes = array(
-    'PHP',
-    'Java',
-    'Javascript',
-    'Python'
-);
-
-$CFG->CT_Types = array(
-    'formsPath' => 'exercise/forms/',
-    'studentsPath' => 'exercise/students/',
-    'types' => array(
-        'MYSQL' => array(
-            'name' => 'sql',
-            'class' => \CT\CT_ExerciseSQL::class,
-            'instructorForm' => 'exerciseSQLForm.php.twig',
-            'studentView' => 'exerciseSQLStudent.php.twig',
-            'sqlTypes' => array('SELECT', 'DML', 'DDL'),
-            'dbConnections' => array(
-                array(
-                    'name' => 'MySQL',
-                    'dbDriver' => 'mysql',
-                    'dbHostName' => 'tsugi-mysql-db',
-                    'dbPort' => 3306,
-                    'dbUser' => 'tsugi_root',
-                    'dbPassword' => 'tpass',
-                    'onFly' => array(
-                        'allowed' => true,
-                        'userPrefix' => 'JUEZ',
-                        'createIsolateUserProcedure' => 'tsugi.CREATEISOLATEUSER',
-                        'dropIsolateUserProcedure' => 'tsugi.DROPISOLATEUSER',
-                    ),
-                ),
-                array(
-                    'name' => 'Oracle',
-                    'dbDriver' => 'oci',
-                    'dbHostName' => 'localhost',
-                    'dbPort' => 1521,
-                    'dbSID' => 'dbSID',
-                    'dbUser' => 'oraUser',
-                    'dbPassword' => 'oraPass',
-                    'onFly' => array(
-                        'allowed' => true,
-                        'userPrefix' => 'userPrefix',
-                        'createIsolateUserProcedure' => 'CREATEISOLATEUSER', // Show definition at the end
-                        'dropIsolateUserProcedure' => 'DROPISOLATEUSER', // Show definition at the end
-                    ),
-                ),
-                array(
-                    'name' => 'SQLite',
-                    'dbDriver' => 'sqlite',
-                    'dbFile' => '/path/to/file.sq3 or :memory:',
-                    'dbUser' => '',
-                    'dbPassword' => '',
-                    'onFly' => array(
-                        'allowed' => true,
-                    ),
-                ),
-            ),
-        ),
-        'programming' => array(
+$CFG->ExerciseProperty = array(
             'name' => 'programming',
             'class' => \CT\CT_ExerciseCode::class,
-            'instructorForm' => 'exerciseCodeForm.php.twig',
-            'studentView' => 'exerciseCodeStudent.php.twig',
+    'instructorForm' => 'exercise/forms/exerciseCodeForm.php.twig',
+    'studentView' => 'exercise/students/exerciseCodeStudent.php.twig',
             'timeout' => 5,
             'codeLanguages' => array(
-                array('name' => 'Java', 'ext' => 'xml', 'command' => null, 'stdin' => false),
+        array('name' => 'Java'),
+        // array('name' => 'PHP', 'ext' => 'xml', 'command' => null, 'stdin' => false)
+        
             ),
-        ),
-    ),
+    
 );
 
 $CFG->difficulty = array(

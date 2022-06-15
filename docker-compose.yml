@@ -102,6 +102,43 @@ services:
       PORT: ${XML_EVALUATOR_PORT}
       EMAIL: ${XML_EVALUATOR_REQUESTS_EMAIL}
       PASSWORD: ${XML_EVALUATOR_REQUESTS_PASSWORD}
+  sql-validator:
+    container_name: sql-validator_container
+    image: sql-validator_img
+    restart: unless-stopped
+    build:
+      context: ./validators/
+      dockerfile: Dockerfile_sql_validator
+      args:
+        GITHUB_TOKEN: ${GITHUB_TOKEN}
+        NODE_VERSION: ${NODE_VERSION}
+        SQL_VALIDATOR_BRANCH: ${SQL_VALIDATOR_BRANCH}
+    environment:
+      FEEDBACK_MANAGER_URL: ${FEEDBACK_MANAGER_URL}
+      BASE_URL: ${XML_EVALUATOR_REQUESTS_BASE_URL}/api
+      EMAIL: ${XML_EVALUATOR_REQUESTS_EMAIL}
+      PASSWORD: ${XML_EVALUATOR_REQUESTS_PASSWORD}
+      SQL_EVALUATOR_DBMS: ${SQL_EVALUATOR_DBMS}
+      SQL_EVALUATOR_PORT: ${SQL_POSTGRES_PORT}
+      SQL_EVALUATOR_USER: ${SQL_POSTGRES_USER}
+      SQL_EVALUATOR_PASSWORD: ${SQL_POSTGRES_PASSWORD}
+      SQL_EVALUATOR_DATABASE: ${SQL_POSTGRES_DATABASE}
+      SQL_EVALUATOR_HOST: ${SQL_EVALUATOR_HOST}
+      SQL_EVALUATOR_USERPREFIX: ${SQL_EVALUATOR_USERPREFIX}
+      CREATEISOLATEUSERPROCEDURE: ${CREATEISOLATEUSERPROCEDURE}
+      DROPISOLATEUSERPROCEDURE: ${DROPISOLATEUSERPROCEDURE}
+    depends_on:
+      - db-validator-postgres
+  db-validator-postgres:
+    image: postgres
+    restart: always
+    environment:
+      POSTGRES_USER: ${SQL_POSTGRES_USER}
+      POSTGRES_PASSWORD: ${SQL_POSTGRES_PASSWORD}
+      POSTGRES_DATABASE: ${SQL_POSTGRES_DATABASE}
+      POSTGRES_PORT: ${SQL_POSTGRES_PORT}
+    volumes:
+      - ./postgres_sql/initScripts:/docker-entrypoint-initdb.d
   feedback-manager:
     container_name: feedback-manager_container
     image: feedback-manager_img

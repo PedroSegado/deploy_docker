@@ -1,0 +1,22 @@
+FROM node:16.13.2
+ARG GITHUB_TOKEN=${GITHUB_TOKEN}
+ARG SQL_VALIDATOR_BRANCH=${SQL_VALIDATOR_BRANCH}
+
+RUN npm install -g nodemon
+
+WORKDIR /app
+
+RUN git config --global url."https://${GITHUB_TOKEN}@github.com/".insteadOf "https://github.com/"
+
+RUN git clone --branch ${SQL_VALIDATOR_BRANCH} https://github.com/KA226-COVID/sql-evaluator.git
+
+RUN mkdir -p /app/sql-evaluator/server/public/zip
+
+WORKDIR /app/sql-evaluator/server
+
+RUN npm ci
+# RUN npm install
+
+EXPOSE 3000
+
+ENTRYPOINT [ "npm", "run", "prod" ]
