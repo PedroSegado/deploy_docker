@@ -70,26 +70,9 @@ $CFG->validators = array(
             ],
         ]
     ],
-    
-    "PHP" => [
-        "name" => 'PHP',
-        "baseUrl" => "http://{$CFG->repositoryUrl}/",
-    ],
-    "SQL-DQL" => [
-        "name" => "SQL-DQL",
+    "PostgreSQL" => [
+        "name" => "PostgreSQL",
         "baseUrl" => "http://sql-validator:3000/",
-    ],
-    "SQL-DML" => [
-        "name" => "SQL-DML",
-        "baseUrl" => "http://sql-validator:3000/",
-    ],
-    "SQL-DDL" => [
-        "name" => "SQL-DDL",
-        "baseUrl" => "http://sql-validator:3000/",
-    ],
-    "Python" => [
-        "name" => 'Python',
-        "baseUrl" => "http://{$CFG->repositoryUrl}/",
     ],
 );
 
