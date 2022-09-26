@@ -39,13 +39,35 @@ $CFG->validators = array(
                 ],
                 [
                     "name" => "version",
-                    "value" => ".01",
+                    "value" => "openjdk 11.0.15",
                 ],
                 [
                     "name" => "engine",
                     "value" => "https://openjdk.java.net/",
                 ],
-            ],
+            ]
+        ]
+    ],
+
+    "Python" => [
+        "name" => 'Python',
+        "baseUrl" => "http://java-validator:3000/",
+        "capabilities" => [
+            "id" => "Python-evaluator",
+            "features" => [
+                [
+                    "name" => "language",
+                    "value" => "python",
+                ],
+                [
+                    "name" => "version",
+                    "value" => "3.9.2",
+                ],
+                [
+                    "name" => "engine",
+                    "value" => "https://www.python.org/download/releases/3.0/",
+                ],
+            ]
         ]
     ],
 
