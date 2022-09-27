@@ -48,6 +48,27 @@ $CFG->validators = array(
             ]
         ]
     ],
+    "Javascript" => [
+        "name" => 'Javascript',
+        "baseUrl" => "http://java-validator:3000/",
+        "capabilities" => [
+            "id" => "Javascript-evaluator",
+            "features" => [
+                [
+                    "name" => "language",
+                    "value" => "javascript",
+                ],
+                [
+                    "name" => "version",
+                    "value" => "node v16.13.2",
+                ],
+                [
+                    "name" => "engine",
+                    "value" => "https://nodejs.org/dist/v16.13.2/",
+                ],
+            ]
+        ]
+    ],
 
     "Python" => [
         "name" => 'Python',
