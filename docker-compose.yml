@@ -65,7 +65,7 @@ services:
       - spring-mongo-db
     volumes:
       - './central-repository/application.properties:/app/questions-storage/src/main/resources/application.properties:rw'
-      - 'spring-files:/codetest'
+      - './central-repository/spring-files:/codetest'
     ports:
       - 8079:8080
       - 8015:5005
@@ -148,6 +148,7 @@ services:
       PORT: ${FEEDBACK_MANAGER_PORT}
       FEEDBACK_MONGO_URI: ${FEEDBACK_MONGO_URI}
       BASE_URL: ${SPRING_REQUESTS_BASE_URL}/api
+      BASE_PORT: 3000
       EMAIL: ${SPRING_REQUESTS_EMAIL}
       PASSWORD: ${SPRING_REQUESTS_PASSWORD}
     build:
