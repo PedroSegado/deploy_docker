@@ -39,13 +39,56 @@ $CFG->validators = array(
                 ],
                 [
                     "name" => "version",
-                    "value" => ".01",
+                    "value" => "openjdk 11.0.15",
                 ],
                 [
                     "name" => "engine",
                     "value" => "https://openjdk.java.net/",
                 ],
-            ],
+            ]
+        ]
+    ],
+    "Javascript" => [
+        "name" => 'Javascript',
+        "baseUrl" => "http://java-validator:3000/",
+        "capabilities" => [
+            "id" => "Javascript-evaluator",
+            "features" => [
+                [
+                    "name" => "language",
+                    "value" => "javascript",
+                ],
+                [
+                    "name" => "version",
+                    "value" => "node v16.13.2",
+                ],
+                [
+                    "name" => "engine",
+                    "value" => "https://nodejs.org/dist/v16.13.2/",
+                ],
+            ]
+        ]
+    ],
+
+    "Python" => [
+        "name" => 'Python',
+        "baseUrl" => "http://java-validator:3000/",
+        "capabilities" => [
+            "id" => "Python-evaluator",
+            "features" => [
+                [
+                    "name" => "language",
+                    "value" => "python",
+                ],
+                [
+                    "name" => "version",
+                    "value" => "3.9.2",
+                ],
+                [
+                    "name" => "engine",
+                    "value" => "https://www.python.org/download/releases/3.0/",
+                ],
+            ]
         ]
     ],
 
