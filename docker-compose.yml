@@ -18,6 +18,8 @@ services:
       SPRING_CODETEST_PORT: ${SPRING_PORT}
       CODETEST_REST_FILE_PATH: ${CODETEST_REST_FILE_PATH}
       TSUGI_ADMIN_PASSWORD: ${TSUGI_ADMIN_PASSWORD}
+      TSUGI_PANIC_RESTART_PASSWORD: ${TSUGI_PANIC_RESTART_PASSWORD}
+      TSUGI_PANIC_RESTART_EMAIL: ${TSUGI_PANIC_RESTART_EMAIL}
       TSUGI_LANG: ${TSUGI_LANG}
       TSUGI_GOOGLE_CLIENT_SECRET: ${TSUGI_GOOGLE_CLIENT_SECRET}
       TSUGI_GOOGLE_CLIENT_ID: ${TSUGI_GOOGLE_CLIENT_ID}
@@ -45,6 +47,9 @@ services:
       - "./tsugi/config_tsugi_docker.php:/var/www/html/tsugi/config.php:rw"
       - "./tsugi/config_codetest_docker.php:/var/www/html/tsugi/mod/codetest/config.php:rw"
       - "./tsugi/msmtprc:/etc/msmtprc:ro"
+      - type: bind
+        source: ./pipe/hostpipe
+        target: /var/pipe/hostpipe
   spring-codetest:
     container_name: spring_codetest_container
     image: spring_codetest_img
