@@ -190,7 +190,7 @@ services:
     volumes:
       - ./nginx:/etc/nginx/templates
       - ./gateway:/app/static
-      - /opt/certs:/opt/certs
+      - ./nginx/certs:/opt/certs
     ports:
       - "80:80"
       - "443:443"
