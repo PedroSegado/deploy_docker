@@ -2,7 +2,7 @@ FROM openjdk:11-jdk
 ARG JAVA_VALIDATOR_BRANCH=${JAVA_VALIDATOR_BRANCH}
 ARG NODE_VERSION=${NODE_VERSION}
 
-RUN apt-get update && apt-get install -y git curl
+RUN apt-get update && apt-get install -y git curl php
 
 ENV NVM_DIR=/root/.nvm
 RUN curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.0/install.sh | bash
