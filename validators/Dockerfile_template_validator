@@ -1,0 +1,17 @@
+FROM node:16.13.2
+ARG TEMPLATE_VALIDATOR_BRANCH=${TEMPLATE_VALIDATOR_BRANCH}
+
+RUN apt-get update
+RUN apt-get install -y git
+
+WORKDIR /app
+
+#RUN git clone --branch ${TEMPLATE_VALIDATOR_BRANCH} https://github.com/JuezLTI/template-evaluator.git
+
+WORKDIR /app/template-evaluator/server
+
+RUN npm ci
+
+EXPOSE 3000
+
+ENTRYPOINT [ "npm", "run", "prod" ]

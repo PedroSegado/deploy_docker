@@ -117,6 +117,19 @@ $CFG->validators = array(
         "name" => "PostgreSQL",
         "baseUrl" => "http://sql-validator:3000/",
     ],
+//  "Template" => [
+//     "name" => 'Template',
+//     "baseUrl" => "http://template-validator:3000/",
+//     "capabilities" => [
+//         "id" => "Template-evaluator",
+//         "features" => [
+//             [
+//                 "name" => "language",
+//                 "value" => "java",
+//             ],
+//         ]
+//     ]
+//  ],
 );
 
 $CFG->apiConfigs = [

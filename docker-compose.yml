@@ -162,6 +162,23 @@ services:
         FEEDBACK_MANAGER_BRANCH: ${FEEDBACK_MANAGER_BRANCH}
     ports:
       - 3001:3003
+#  template-validator:
+#    container_name: template-validator_container
+#    image: template-validator_img
+#    restart: unless-stopped
+#    build:
+#      context: ./validators/
+#      dockerfile: Dockerfile_template_validator
+#      args:
+#        GITHUB_TOKEN: ${GITHUB_TOKEN}
+#        NODE_VERSION: ${NODE_VERSION}
+#        TEMPLATE_VALIDATOR_BRANCH: ${TEMPLATE_VALIDATOR_BRANCH}
+#    environment:
+#      FEEDBACK_MANAGER_URL: ${FEEDBACK_MANAGER_URL}
+#      BASE_URL: ${SPRING_REQUESTS_BASE_URL}/api
+#      PORT: ${NODE_SERVER_PORT}
+#      EMAIL: ${SPRING_REQUESTS_EMAIL}
+#      PASSWORD: ${SPRING_REQUESTS_PASSWORD}
   tsugi-mysql-db:
     container_name: tsugi_mysql_db_container
     image: 'mysql:5.7'
