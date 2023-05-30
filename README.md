@@ -47,3 +47,64 @@ To get the docker environment running just run this command in the root folder o
 To rebuild a container with the latests code changes you'll need to run this command:
 
     docker-compose build --no-cache --force-rm <service-name>
+
+### Technologies/Components to use
+- Apache + PHP
+    - CPU: Moderated
+    - Memory: Moderated
+    - Disco: Low
+
+- MySQL
+    - CPU: Low
+    - Memory: Low
+    - Disco: Moderated/High
+
+- Java (Spring-boot)
+    - CPU: Moderated
+    - Memory: Moderated
+    - Disco: High
+
+- MongoDB
+    - CPU: Low
+    - Memory: Low
+    - Disco: Moderated/High
+
+- Validators/FeedbackManager (NodeJS)
+    - CPU: Moderated
+    - Memory: Moderated/High
+    - Disco: Low
+
+### 1º Approach: All-In-One node
+**Hardware requirements**: Expected concurrent users = 30
+CPU: 6/8 cores.
+Ram: 16 gb
+Disk: 600 gb
+
+*Components*:
+- Docker + Docker-Compose
+
+- Tsugi/Codetest
+    - Engine: Apache 2.4 + PHP 7.3
+    - DB: MySQL 5.7
+
+- Central repository:
+    - Engine: Java 8
+    - DB: Mongo
+
+- Validators/FeedbackManager:
+    - Engine: NodeJS 16
+
+### 2º Approach: Distributed architecture
+**Hardware requirements**: Variable
+
+**Components**:
+- Tsugi/Codetest
+    - Engine: Apache 2.4 + PHP 7.3
+    - DB: MySQL 5.7
+
+- Validators/FeedbackManager:
+    - Engine: NodeJS 16
+
+- Central repository: On the cloud.
+
+- Requires additional effort to adapt components to work outside the Docker-compose network.
