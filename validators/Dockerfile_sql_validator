@@ -1,12 +1,9 @@
 FROM node:16.13.2
-ARG GITHUB_TOKEN=${GITHUB_TOKEN}
 ARG SQL_VALIDATOR_BRANCH=${SQL_VALIDATOR_BRANCH}
 
 RUN npm install -g nodemon
 
 WORKDIR /app
-
-RUN git config --global url."https://${GITHUB_TOKEN}@github.com/".insteadOf "https://github.com/"
 
 RUN git clone --branch ${SQL_VALIDATOR_BRANCH} https://github.com/JuezLTI/sql-evaluator.git
 

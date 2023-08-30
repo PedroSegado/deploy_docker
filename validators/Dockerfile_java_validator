@@ -1,5 +1,4 @@
 FROM openjdk:11-jdk
-ARG GITHUB_TOKEN=${GITHUB_TOKEN}
 ARG JAVA_VALIDATOR_BRANCH=${JAVA_VALIDATOR_BRANCH}
 ARG NODE_VERSION=${NODE_VERSION}
 
@@ -13,8 +12,6 @@ RUN . "$NVM_DIR/nvm.sh" && nvm alias default v${NODE_VERSION}
 ENV PATH="/root/.nvm/versions/node/v${NODE_VERSION}/bin/:${PATH}"
 
 WORKDIR /app
-
-RUN git config --global url."https://${GITHUB_TOKEN}@github.com/".insteadOf "https://github.com/"
 
 RUN git clone --branch ${JAVA_VALIDATOR_BRANCH} https://github.com/JuezLTI/java-evaluator.git
 

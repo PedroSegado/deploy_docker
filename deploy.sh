@@ -29,15 +29,15 @@ if $help_; then
 	exit 0
 fi
 
-docker-compose down
-docker-compose rm -f
+docker compose down
+docker compose rm -f
 docker image prune -f
 if $volumes_; then
 	docker volume prune -f
 fi
-docker-compose build --no-cache
+docker compose build --no-cache
 if [[ $? -ne 0 ]]; then
 	echo "Error building...."
 	exit 1
 fi
-docker-compose up -d
+docker compose up -d

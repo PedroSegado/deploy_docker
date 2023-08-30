@@ -80,7 +80,6 @@ services:
       context: ./validators/
       dockerfile: Dockerfile_xml_validator
       args:
-        GITHUB_TOKEN: ${GITHUB_TOKEN}
         XML_VALIDATOR_BRANCH: ${XML_VALIDATOR_BRANCH}
     environment:
       FEEDBACK_MANAGER_URL: ${FEEDBACK_MANAGER_URL}
@@ -96,7 +95,6 @@ services:
       context: ./validators/
       dockerfile: Dockerfile_java_validator
       args:
-        GITHUB_TOKEN: ${GITHUB_TOKEN}
         NODE_VERSION: ${NODE_VERSION}
         JAVA_VALIDATOR_BRANCH: ${JAVA_VALIDATOR_BRANCH}
     environment:
@@ -113,7 +111,6 @@ services:
       context: ./validators/
       dockerfile: Dockerfile_sql_validator
       args:
-        GITHUB_TOKEN: ${GITHUB_TOKEN}
         NODE_VERSION: ${NODE_VERSION}
         SQL_VALIDATOR_BRANCH: ${SQL_VALIDATOR_BRANCH}
     environment:
@@ -156,7 +153,6 @@ services:
       context: ./validators/
       dockerfile: Dockerfile_feedback_manager
       args:
-        GITHUB_TOKEN: ${GITHUB_TOKEN}
         PORT: ${FEEDBACK_MANAGER_PORT}
         FEEDBACK_MANAGER_BRANCH: ${FEEDBACK_MANAGER_BRANCH}
   tsugi-mysql-db:
