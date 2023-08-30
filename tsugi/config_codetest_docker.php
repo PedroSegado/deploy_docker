@@ -123,6 +123,27 @@ $CFG->validators = array(
         "name" => "PostgreSQL",
         "baseUrl" => "http://sql-validator:3000/",
     ],
+    "PHP" => [
+        "name" => 'PHP',
+        "baseUrl" => "http://java-validator:3000/",
+        "capabilities" => [
+            "id" => "php-evaluator",
+            "features" => [
+                [
+                    "name" => "language",
+                    "value" => "php",
+                ],
+                [
+                    "name" => "version",
+                    "value" => "7.4",
+                ],
+                [
+                    "name" => "engine",
+                    "value" => "https://php.net/",
+                ],
+            ]
+        ]
+    ],
 //  "Template" => [
 //     "name" => 'Template',
 //     "baseUrl" => "http://template-validator:3000/",
