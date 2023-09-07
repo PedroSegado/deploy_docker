@@ -134,7 +134,7 @@ services:
     depends_on:
       - db-validator-postgres
   db-validator-postgres:
-    image: postgres
+    image: postgres:${SQL_POSTGRES_VERSION}
     restart: always
     environment:
       POSTGRES_USER: ${SQL_POSTGRES_USER}
@@ -216,8 +216,8 @@ services:
       - ./gateway:/app/static
       - ./nginx/certs:/opt/certs
     ports:
-      - "80:80"
-      - "443:443"
+      - ${NGINX_PORT}:80
+      - ${NGINX_SECURE_PORT}:443
     environment:
       NGINX_SPRING_REPO_URL: ${NGINX_SPRING_REPO_URL}
       NGINX_APPLICATION_URL: ${NGINX_APPLICATION_URL}
